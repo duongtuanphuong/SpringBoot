@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Đây là trang đăng kí</h1> 
+    
+    <form action="" class="">
+        <input type="text" class="sign-up-name" placeholder="name">
+        <input type="text" class="sign-up-email" placeholder="email">
+        <input type="text" class="sign-up-password" placeholder="password">
+        <input type="text" class="sign-up-phone" placeholder="phone">
+        <span style="padding: 20px; background-color: bisque; cursor: pointer;" class="sign-up-btn">Đăng ký</span>
+    </form>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        $(document).on('click', function (e) {
+            let target = e.target;
+            if (target.closest('.sign-up-btn')) {
+                let isValid = true;
+                let name = $('.sign-up-name');
+                let nameValue = name.val();
+                let email = $('.sign-up-email');
+                let emailValue = email.val();
+                let password = $('.sign-up-password');
+                let passwordValue = password.val();
+                let phone = $('.sign-up-phone');
+                let phoneValue = phone.val();
+                if (isValid == true) {
+                    req = {
+                        name: nameValue,
+                        email: emailValue,
+                        password: passwordValue,
+                        phone: phoneValue,
+                    }
+                    var myJson = JSON.stringify(req);
+                    $.ajax({
+                        url: '/api/register',
+                        type: 'POST',
+                        data: myJson,
+                        contentType: "application/json; charset=utf-8",
+                        success: function (data) {
+                            alert("Đăng ký thành công");
+                        },
+                        error: function (data) {
+                            alert(data.responseJSON.message);
+                        }
+                    })
+                }
+            }
+        })
+    </script>
+</body>
+</html>
