@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- <div class="float-left">
+        <input type="file" name="file" id="upload-thumbnail">
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+      $("#upload-thumbnail").change(function () {
+        var fd = new FormData();
+        var file = $(this)[0].files[0];
+        fd.append("file", file);
+
+        $.ajax({
+          url: "/upload",
+          type: "post",
+          data: fd,
+          contentType: false,
+          processData: false,
+          success: function (data) {
+            console.log("Ok")
+          },
+          error: function (data) {
+            console.log("LOL")
+          },
+        });
+      });
+    </script> -->
+
+    <form id="file-upload-form">
+      <label for="file-upload-input">Select file to upload</label>
+      <input type="file" id="file-upload-input" name="file" />
+      <button type="submit">Start Upload</button>
+    </form>
+    <ul th:each = " image : ${images}"> 
+      <li><img th:src="@{'/photos/' + ${image.link}}" alt=""></li>
+    </ul>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <script>
+      $(document).ready(function () {
+        // bind form submit event
+        $("#file-upload-form").on("submit", function (e) {
+          // cancel the default behavior
+          e.preventDefault();
+
+          // use $.ajax() to upload file
+          $.ajax({
+            url: "/upload",
+            type: "POST",
+            data: new FormData(this),
+            enctype: "multipart/form-data",
+            processData: false,
+            contentType: false,
+            cache: false,
+            success: function (res) {
+              console.log(res);
+            },
+            error: function (err) {
+              console.error(err);
+            },
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
