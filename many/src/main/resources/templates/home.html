@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Hello World!</h1>
+
+
+    <form id="file-upload-form">
+        <label for="file-upload-input">Select file to upload</label>
+        <input type="text" name="name" id="product-name">
+        <input type="file" name ="file" id="product-photo">
+        <button type="submit">Start Upload</button>
+    </form>
+    
+    <ul th:each = " product :${products}">
+      <li th:text = "${product.name}"></li>
+      <li><img th:src="@{/api/image/} + ${product.photo}" alt=""></li>
+    </ul>
+  
+  
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+      <script>
+        $(document).ready(function () {
+          // bind form submit event
+          $("#file-upload-form").on("submit", function (e) {
+            // cancel the default behavior
+            e.preventDefault();
+  
+            // use $.ajax() to upload file
+            $.ajax({
+              url: "/addProduct",
+              type: "POST",
+              data: new FormData(this),
+              processData: false,
+              contentType: false,
+              cache: false,
+              success: function (res) {
+                console.log(res);
+              },
+              error: function (err) {
+                console.error(err);
+              },
+            });
+          });
+        });
+      </script>
+
+
+
+</body>
+</html>
